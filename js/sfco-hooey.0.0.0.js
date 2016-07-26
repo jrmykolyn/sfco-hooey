@@ -13,7 +13,7 @@
  * @summary   Hooey is a JavaScript plugin for generating random strings.
  *
  * @link      N/A
- * @since     0.0.0
+ * @since     0.0.1
  * @requires  N/A
  *
  * @author    Jesse R Mykolyn <jrmykolyn@gmail.com>
@@ -166,12 +166,65 @@ try {
 		}
 
 
+		function runCollisionCheck(opts, force) {
+			// Re-assign args. or fallback to defaults.
+			opts = opts || {};
+			force = force || false;
+
+			// Declare all required/config. vars.
+			var count = opts.count || 100;
+
+			// Adjust `opts` to prevent conflict between `runCollisionCheck()` && `getRandomString()`.
+			opts.count = 1;
+
+			// Declare local vars.
+			var MAX_SAFE_COUNT = 50000,
+				found_collision = false,
+				collection = [],
+				string = '',
+				i = 0;
+
+			// Check `count` against `MAX_SAFE_COUNT`,
+			// Display warning and `return` if invocation is not being forced.
+			if (count >= MAX_SAFE_COUNT && force !== true) {
+				console.log('WARNING:');
+				console.log('Generating 50,000 or more strings may cause the browser to hang.');
+				console.log('Re-invoke `sfcoHooey()` width `force` argument to contine.');
+
+				return null;
+			}
+
+			// Generate strings and check for collisions.
+			while (!found_collision && (i < count)) {
+				string = getRandomString(opts);
+
+				if (collection.indexOf(string) >= 0) {
+					found_collision = string;
+					break;
+				}
+
+				collection.push(string);
+				i++
+			}
+
+			// Log results to console.
+			if (found_collision) {
+				console.log('FOUND COLLISION:', string); /// TEMP
+			} else {
+				console.log('Did not find a collision after ' + count + ' iterations.');
+			}
+
+			return found_collision;
+		}
+
+
 		/* -------------------------------------------------- */
 		/* Public API */
 		/* -------------------------------------------------- */
 		window.sfcoHooey = function() {
 			return {
-				getRandomString: getRandomString
+				getRandomString: getRandomString,
+				runCollisionCheck: runCollisionCheck
 			};
 		};
 	})();
