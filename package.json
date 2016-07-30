@@ -1,0 +1,20 @@
+{
+  "name": "sfco-hooey",
+  "version": "0.0.0",
+  "description": "Hooey is a JavaScript plugin for generating random strings. Hooey supports upper and lower case alphabetical characters, integers, and some punctuation marks.",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrmykolyn/sfco-hooey.git"
+  },
+  "author": "Jesse R Mykolyn",
+  "license": "ISC",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/jrmykolyn/sfco-hooey/issues"
+  },
+  "homepage": "https://github.com/jrmykolyn/sfco-hooey#readme"
+}
