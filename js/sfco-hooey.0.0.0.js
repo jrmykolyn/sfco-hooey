@@ -89,6 +89,35 @@ try {
 			return null;
 		}
 
+		function printRandomString(target, opts) {
+			// Re-assign args. or fallback to defaults.
+			opts = opts || {};
+			target = target || null;
+
+			// Print error message if `target` is invalid.
+			if (!target || typeof target !== 'string') {
+				console.log('ERROR: Missing or invalid argument for `target`.');
+				console.log('Expected: STRING.');
+			}
+
+			// Declare local vars.
+			var elem = document.getElementById(target),
+				strings = getRandomString(opts),
+				string;
+
+			// If possible, generate random strings and append to `elem`.
+			if (elem) {
+
+				if (!Array.isArray(strings)) { strings = [strings]; }
+
+				for (var i = 0, x = strings.length; i < x; i++) {
+					string = strings[i];
+
+					elem.innerHTML += string;
+					elem.innerHTML += '<br>';
+				}
+			}
+		}
 
 		function buildRandomString(length, whitelistObj) {
 			var key_pos,
@@ -224,6 +253,7 @@ try {
 		window.sfcoHooey = function() {
 			return {
 				getRandomString: getRandomString,
+				printRandomString: printRandomString,
 				runCollisionCheck: runCollisionCheck
 			};
 		};
