@@ -35,6 +35,16 @@ try {
 		/* -------------------------------------------------- */
 		/* Private Functions */
 		/* -------------------------------------------------- */
+		/**
+		 * Returns 1 or more random strings.
+		 *
+		 * The properties of the returned strings can
+		 * be adjusted by invoking the function with an
+		 * optional configuration object.
+		 *
+		 * @param {Object} `opts` - Optional configuration object.
+		 * @return {Array|String}
+		*/
 		function getRandomString(opts) {
 			// Re-assign `opts` or set to empty obj.
 			opts = opts || {};
@@ -89,6 +99,15 @@ try {
 			return null;
 		}
 
+
+		/**
+		 * Appends 1 or more random strings to a DOM element (specified by ID).
+		 * The returned strings can be modified by passing in a config. object.
+		 *
+		 * @param {String} `target` - DOM element ID.
+		 * @param {Object} `opts` - Optional configuration object.
+		 * @return {undefined}
+		*/
 		function printRandomString(target, opts) {
 			// Re-assign args. or fallback to defaults.
 			opts = opts || {};
@@ -119,6 +138,15 @@ try {
 			}
 		}
 
+
+		/**
+		 * Builds a single random string of a specified length.
+		 * String is built using the `whiteListObj` character sets.
+		 *
+		 * @param {Number} `length`
+		 * @param {Object} `whitelistObj`
+		 * @return {String}
+		*/
 		function buildRandomString(length, whitelistObj) {
 			var key_pos,
 				key,
@@ -139,6 +167,20 @@ try {
 		}
 
 
+		/**
+		 * Receives a base string and a selection of characters to prepend.
+		 *
+		 * If `allowOverflow` is true, the base string is prepended.
+		 *
+		 * Otherwise, a number of characters (equal to the length of the
+		 * `prepend` argument) are removed from the beginning of the base
+		 * string before it is prepended.
+		 *
+		 * @param {String} `string`
+		 * @param {String} `prepend`
+		 * @param {Boolean} `allowOverflow`
+		 * @return {String}
+		*/
 		function prependString(string, prepend, allowOverflow) {
 			prepend = prepend || '';
 			allowOverflow = allowOverflow || false;
@@ -151,6 +193,20 @@ try {
 		}
 
 
+		/**
+		 * Receives a base string and a selection of characters to append.
+		 *
+		 * If `allowOverflow` is true, the base string is appended.
+		 *
+		 * Otherwise, a number of characters (equal to the length of the
+		 * `prepend` argument) are removed from the end of the base
+		 * string before it is appended.
+		 *
+		 * @param {String} `string`
+		 * @param {String} `append`
+		 * @param {Boolean} `allowOverflow`
+		 * @return {String}
+		*/
 		function appendString(string, append, allowOverflow) {
 			append = append || '';
 			allowOverflow = allowOverflow || false;
@@ -163,7 +219,21 @@ try {
 		}
 
 
+		/*
+		NOTE:
+		Function is not currently in use.
+
+		TODO:
+		Review `typeof` logic, remove if unnecessary.
+		Complete documentation for function
+		*/
+		/**
+		 * @param {Array} `stringArr`
+		 * @return {Array}
+		*/
 		function reduceStringArr(stringArr) {
+			console.log(stringArr); /// TEMP
+
 			return stringArr.reduce(function(prev, curr, i, el) {
 				if (typeof prev === 'string' && typeof curr === 'string') {
 					return prev + curr;
@@ -172,13 +242,21 @@ try {
 		}
 
 
+		/**
+		 * Checks if the total length of the characters to prepend/ append
+		 * is greater than the specified length of the the random string.
+		 *
+		 * @param {Number} `length`
+		 * @param {Array} `additionalCharsArr`
+		 * @return {Boolean|null}
+		*/
 		function getLengthConflict(length, additionalCharsArr) {
 			length = length || null;
 			additionalCharsArr = Array.isArray(additionalCharsArr) ? additionalCharsArr : null;
 
 			// If args. are valid, check for conflict. 
 			if (length && additionalCharsArr) {
-				var additionalChars = reduceStringArr(additionalCharsArr);
+				var additionalChars = additionalCharsArr.join('');
 
 				if (additionalChars.length >= length) {
 					console.log('ERROR: There is a conflict between options: length; prepend; append; allowOverflow.');
@@ -195,6 +273,17 @@ try {
 		}
 
 
+		/**
+		 * Generates a selection of random strings and checks for collisions.
+		 * Returns `true` if a collision is found, `false` otherwise.
+		 *
+		 * Function will prompt the user to `force` the invocation if the
+		 * number of tests is greater than the internal `MAX_SAFE_COUNT`.
+		 *
+		 * @param {Object} `opts`
+		 * @param {Boolean} `force`
+		 * @return {Boolean|null}
+		*/
 		function runCollisionCheck(opts, force) {
 			// Re-assign args. or fallback to defaults.
 			opts = opts || {};
